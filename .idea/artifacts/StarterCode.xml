@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="StarterCode">
+    <output-path>$USER_HOME$/Downloads</output-path>
+    <root id="archive" name="StarterCode.jar">
+      <element id="archive" name="EscapeC23Starterzip">
+        <element id="module-source" name="C23Escape" />
+        <element id="library" level="project" name="lib" />
+        <element id="library" level="project" name="Java EE 6-Java EE 6" />
+        <element id="file-copy" path="$PROJECT_DIR$/TODO.md" />
+      </element>
+    </root>
+  </artifact>
+</component>
