@@ -104,13 +104,16 @@ public class EscapeGameBuilder
 	}
     
     /***********************************************************************
-     * Once the EscapeGameIniializer is constructed, this method creates the
+     * Once the EscapeGameInitializer is constructed, this method creates the
      * EscapeGameManager instance. You use the gameInitializer object to get
 	 * all of the information you need to create your game.
      * @return the game instance
      ***********************************************************************/
     public EscapeGameManager makeGameManager()
     {
+
+
+
     	// >>> YOU MUST IMPLEMENT THIS METHOD<<<
     	return null;
     }
