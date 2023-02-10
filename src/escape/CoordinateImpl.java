@@ -15,10 +15,6 @@ public class CoordinateImpl implements Coordinate {
         this.y = y;
     }
 
-    public CoordinateImpl(LocationInitializer li) {
-        this.x = li.x;
-        this.y = li.y;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -28,6 +24,16 @@ public class CoordinateImpl implements Coordinate {
             return false;
         }
         return x == coordinate.x && y == coordinate.y;
+    }
+
+    @Override
+    public int getRow() {
+        return x;
+    }
+
+    @Override
+    public int getColumn() {
+        return y;
     }
 }
 

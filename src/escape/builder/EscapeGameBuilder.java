@@ -14,6 +14,7 @@ package escape.builder;
 
 import econfig.*;
 import escape.*;
+import escape.required.Coordinate;
 import org.antlr.v4.runtime.*;
 
 import javax.xml.bind.*;
@@ -111,10 +112,7 @@ public class EscapeGameBuilder
      ***********************************************************************/
     public EscapeGameManager makeGameManager()
     {
-
-
-
     	// >>> YOU MUST IMPLEMENT THIS METHOD<<<
-    	return null;
+    	return new EscapeGameManagerImpl<Coordinate>(gameInitializer);
     }
 }
