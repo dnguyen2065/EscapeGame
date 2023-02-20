@@ -155,5 +155,10 @@ public class EscapeGameInitializer
 		    + Arrays.toString(locationInitializers) + ", types="
 		    + Arrays.toString(pieceTypes) + "]";
 	}
-	
+
+	public String firstPlayer()
+	{
+		return locationInitializers[0].player;
+	}
+
 }

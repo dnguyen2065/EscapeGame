@@ -3,65 +3,6 @@ Name: Dylan Nguyen
 TDD TODO/Task list
 
 **Build Tests**
-    
-    @Test
-    public void test() {
-        EscapeGameManager egm = null;
-        try {
-            egm = new EscapeGameBuilder("configurations/config.egc").makeGameManager();
-        } catch (Exception e) {
-            fail("Exception from builder: " + e.getMessage());
-        }
-        assertNotNull(egm);
-    }
-
-    @Test
-    public void testCoordinateEquals(){
-        CoordinateImpl coordinate = new CoordinateImpl(1, 1);
-        CoordinateImpl coordinate2 = new CoordinateImpl(1, 1);
-        assertTrue(coordinate.equals(coordinate2));
-
-    }
-
-    @Test
-    public void testCoordinateEquals2(){
-        CoordinateImpl coordinate = new CoordinateImpl(1, 1);
-        CoordinateImpl coordinate2 = new CoordinateImpl(2, 2);
-        assertFalse(coordinate.equals(coordinate2));
-
-    }
-
-    @Test
-    public void testMakeCoordinate(){
-        EscapeGameInitializer gameInitializer = new EscapeGameInitializer();
-        EscapeGameManagerImpl<Coordinate> egm = new EscapeGameManagerImpl<>(gameInitializer);
-        CoordinateImpl testCoord = new CoordinateImpl(1, 1);
-        CoordinateImpl coord = egm.makeCoordinate(1, 1);
-        assertEquals(testCoord, coord);
-    }
-
-    @Test
-    public void testMakeCoordinate2(){
-        EscapeGameInitializer gameInitializer = new EscapeGameInitializer();
-        EscapeGameManagerImpl<Coordinate> egm = new EscapeGameManagerImpl<>(gameInitializer);
-        CoordinateImpl testCoord = new CoordinateImpl(1, 1);
-        CoordinateImpl coord = egm.makeCoordinate(2, 1);
-        assertNotEquals(testCoord, coord);
-    }
-
-    @Test
-    public void testGetRow(){
-        CoordinateImpl coordinate = new CoordinateImpl(1, 1);
-        assertEquals(1, coordinate.getRow());
-        assertNotEquals(2, coordinate.getRow());
-    }
-
-    @Test
-    public void testGetColumn(){
-        CoordinateImpl coordinate = new CoordinateImpl(1, 1);
-        assertEquals(1, coordinate.getColumn());
-        assertNotEquals(2, coordinate.getColumn());
-    }
 
 These are for implementing the EscapeGameBuilder's `makeGameManager()` method.
 
@@ -76,9 +17,26 @@ These are for implementing the EscapeGameBuilder's `makeGameManager()` method.
 |   7   | Create test for making a Coordinate                             | create game object              |
 |   8   | Override makeCoordinate method                                  | create game object              |
 |   9   | Test getRow method                                              | create game object              |
-|   10  | Test getColumn method                                           | create game object              |
-|   11  | Override both methods                                           | create game object              |
-|   12  | Test makeGameManager                                            | create game object              |
-|   13  | populate makeGameManager                                        | create game object              |
+|  10   | Test getColumn method                                           | create game object              |
+|  11   | Override both methods                                           | create game object              |
+|  12   | Test makeGameManager                                            | create game object              |
+|  13   | populate makeGameManager                                        | create game object              |
+|  14   | Test coordiante types (already implemented)                     | create game object              |
+|  15   | Test getting the player from piece                              | create game object              |
+|  16   | Test getName from piece                                         | create game object              |
+|  17   | Create EscapePieceImpl                                          | create game object              |
+|  18   | Override getPlayer method                                       | create game object              |
+|  19   | Override getName method                                         | create game object              |
+|  20   | Test Escape piece equals                                        | create game object              |
+|  21   | Override equals method                                          | create game object              |
+|  22   | Test getPieceAt                                                 | create game object              |
+|  23   | Override getPieceAt method with equals                          | create game object              |
+|  24   | create GameStatusImpl                                           | create game object              |
+|  25   | Test isValidMove for many cases                                 | create game object              |
+|  26   | Override isValidMove method                                     | create game object              |
+|  27   | add helper method to get distance depending on movement pattern | create game object              |
+|  28   | implement helper into isValidMove                               | create game object              |
+|  29   | Test who the first player to make a move is                     | create game object              |
+|  30   | create firstPlayer method                                       | create game object              |
 
 NOTE: no major refactoring was needed between tests.

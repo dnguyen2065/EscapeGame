@@ -6,3 +6,10 @@
 
   Locations:
       (4, 4) Gary frog
+      (4, 5) Chris horse
+      (4, 6) Chris bird
+
+  Piece descriptors :
+      frog omni [distance 3]
+      horse orthogonal [distance 3]
+      bird linear [distance 3]

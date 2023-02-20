@@ -42,12 +42,8 @@ public class EscapeGameManagerImpl<C extends Coordinate> implements EscapeGameMa
         return null;
     }
     @Override
-    public GameStatus move (CoordinateImpl from, CoordinateImpl to) {
-
-
-
-        return null;
+    public GameStatusImpl move (CoordinateImpl from, CoordinateImpl to) {
+        return new GameStatusImpl(getPieceAt(from), gameInitializer, from, to);
     }
-
 
 }
