@@ -11,6 +11,7 @@
  *******************************************************************************/
 package escape.required;
 
+import escape.CoordinateImpl;
 import escape.required.EscapePiece.PieceAttributeID;
 
 /**
@@ -36,6 +37,8 @@ public class PieceAttribute {
     public void setId(PieceAttributeID id) { this.id = id; }
     public int getValue() { return value; }
     public void setValue(int intValue) { this.value = intValue; }
+
+
 
 	/*
 	 * @see java.lang.Object#toString()

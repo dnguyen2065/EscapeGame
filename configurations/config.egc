@@ -1,4 +1,8 @@
-    Coordinate type : SQUARE
-    xMax : 2
-    yMax : 2
-    Players : Chris Pat
+  Coordinate type: SQUARE
+  xMax : 8
+  yMax : 8
+
+  Players : Gary Chris
+
+  Locations:
+      (4, 4) Gary frog

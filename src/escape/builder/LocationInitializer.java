@@ -11,6 +11,8 @@
  *******************************************************************************/
 package escape.builder;
 
+import escape.CoordinateImpl;
+import escape.EscapePieceImpl;
 import escape.required.*;
 import escape.required.EscapePiece.*;
 
@@ -54,6 +56,7 @@ public class LocationInitializer
         this.player = player;
         this.pieceName = pieceName;
     }
+
 
     /*
      * @see java.lang.Object#toString()
