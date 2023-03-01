@@ -1,0 +1,34 @@
+/* Release 1 Square Game 1 */
+Coordinate type: SQUARE
+xMax : 20
+yMax : 18
+
+Players: A B
+
+Locations:
+    /* Player A */
+    (5, 5) A horse
+    (4, 10) A frog
+    (5, 14) A horse
+    (7, 14) A dog
+    (17, 5) A snail
+    (18, 5) A snail
+    (18, 6) A snail
+    (19, 5) A snail
+
+    /* Player B */
+    (9, 16) B bird
+    (10, 10) B bird
+    (17, 4) B snail
+    (17, 6) B snail
+    (18, 4) B snail
+    (19, 4) B snail
+    (19, 6) B snail
+
+
+Piece descriptors:
+    horse omni [distance 5]
+    bird omni [distance 4, fly]
+    frog orthogonal [distance 3]
+    dog linear [distance 5]
+    snail omni [distance 1]
