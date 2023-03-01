@@ -3,6 +3,7 @@ package escape;
 import escape.builder.EscapeGameInitializer;
 import escape.builder.LocationInitializer;
 import escape.required.Coordinate;
+import escape.required.EscapePiece;
 import escape.required.GameStatus;
 import escape.required.LocationType;
 
@@ -29,16 +30,14 @@ public class EscapeGameManagerImpl<C extends Coordinate> implements EscapeGameMa
     }
 
     @Override
-    public EscapePieceImpl getPieceAt(CoordinateImpl coordinate) {
+    public EscapePiece getPieceAt(CoordinateImpl coordinate) {
         LocationInitializer[] LI =  gameInitializer.getLocationInitializers();
 
         for (LocationInitializer locationInitializer : LI) {
             if (locationInitializer.x == coordinate.getRow() && locationInitializer.y == coordinate.getColumn()){
                 return new EscapePieceImpl(locationInitializer.pieceName, locationInitializer.player);
             }
-
         }
-
         return null;
     }
     @Override

@@ -1,6 +1,7 @@
 package escape;
 
 import escape.builder.EscapeGameInitializer;
+import escape.builder.LocationInitializer;
 import escape.builder.PieceTypeDescriptor;
 import escape.required.Coordinate;
 import escape.required.EscapePiece;
@@ -58,6 +59,13 @@ public class GameStatusImpl implements GameStatus {
 
     @Override
     public boolean isValidMove() {
+        EscapeGameManagerImpl escapeGameManager = new EscapeGameManagerImpl(gameInitializer);
+        if(escapeGameManager.getPieceAt((CoordinateImpl) from) == null){
+            return false;
+        }
+        if(to.getColumn() <= 0 || to.getRow() <= 0){
+            return false;
+        }
         for (PieceTypeDescriptor pieceTypeDescriptor : gameInitializer.getPieceTypes()) {
             if (piece.getName().equals(pieceTypeDescriptor.getPieceName())) {
                 if (pieceTypeDescriptor.getMovementPattern().equals(EscapePiece.MovementPattern.LINEAR)) {
@@ -65,28 +73,42 @@ public class GameStatusImpl implements GameStatus {
                     if(pieceTypeDescriptor.getAttribute(EscapePiece.PieceAttributeID.DISTANCE).getValue() < distance(from, to)){
                         return false;
                     }else{
+                        makeMove();
                         return from.getRow() == to.getRow() || from.getColumn() == to.getColumn() || Math.abs(from.getRow() - to.getRow()) == Math.abs(from.getColumn() - to.getColumn());
                     }
                 } else if (pieceTypeDescriptor.getMovementPattern().equals(EscapePiece.MovementPattern.ORTHOGONAL)) {
                     if(pieceTypeDescriptor.getAttribute(EscapePiece.PieceAttributeID.DISTANCE).getValue() < distance(from, to)) {
                         return false;
                     }else{
+                        makeMove();
                         return !from.equals(to);
                     }
                 } else if (pieceTypeDescriptor.getMovementPattern().equals(EscapePiece.MovementPattern.OMNI)) {
                     if(pieceTypeDescriptor.getAttribute(EscapePiece.PieceAttributeID.DISTANCE).getValue() < distance(from, to)) {
                         return false;
                     }else{
+                        makeMove();
                         return !from.equals(to);
                     }
                 } else if (from.getRow() == to.getRow() && from.getColumn() == to.getColumn()) {
                     return false;
                 }
+            }else{
+                return false;
             }
         }
+
         return false;
     }
-
+    private void makeMove() {
+            LocationInitializer[] LI = gameInitializer.getLocationInitializers();
+            for (LocationInitializer locationInitializer : LI) {
+                if (locationInitializer.x == from.getRow() && locationInitializer.y == from.getColumn()) {
+                    locationInitializer.x = to.getRow();
+                    locationInitializer.y = to.getColumn();
+                }
+            }
+    }
     @Override
     public boolean isMoreInformation () {
         return false;
@@ -94,7 +116,7 @@ public class GameStatusImpl implements GameStatus {
 
     @Override
     public MoveResult getMoveResult () {
-        return null;
+        return MoveResult.NONE;
     }
 
     @Override
