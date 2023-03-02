@@ -155,7 +155,24 @@ public class EscapeGameInitializer
 		    + Arrays.toString(locationInitializers) + ", types="
 		    + Arrays.toString(pieceTypes) + "]";
 	}
-
+	public String getPlayerTurn(String lastPlayer)
+	{
+		for(int i = 0; i < locationInitializers.length; i++)
+		{
+			if(locationInitializers[i].player.equals(lastPlayer))
+			{
+				if(i == locationInitializers.length - 1)
+				{
+					return locationInitializers[0].player;
+				}
+				else
+				{
+					return locationInitializers[i + 1].player;
+				}
+			}
+		}
+		return locationInitializers[0].player;
+	}
 	public String firstPlayer()
 	{
 		return locationInitializers[0].player;

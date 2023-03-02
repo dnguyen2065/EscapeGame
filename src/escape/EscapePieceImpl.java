@@ -33,7 +33,7 @@ public class EscapePieceImpl implements EscapePiece {
         if (!(o instanceof EscapePieceImpl escapePiece)) {
             return false;
         }
-        return name == escapePiece.name && Objects.equals(player, escapePiece.player);
+        return Objects.equals(name, escapePiece.name) && Objects.equals(player, escapePiece.player);
     }
 
 }
