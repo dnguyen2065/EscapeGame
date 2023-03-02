@@ -16,6 +16,8 @@ import escape.EscapePieceImpl;
 import escape.required.*;
 import escape.required.EscapePiece.*;
 
+import java.util.Objects;
+
 /**
  * A general initializer for a board location. Since this is used
  * internally and not part of the game, we take a shortcut and make
@@ -56,7 +58,6 @@ public class LocationInitializer
         this.player = player;
         this.pieceName = pieceName;
     }
-
 
     /*
      * @see java.lang.Object#toString()

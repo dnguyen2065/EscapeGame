@@ -25,7 +25,6 @@ public class R2MasterSquareTests extends BaseTestMaster {
     static void testBreakdown() {
         firstTest = false;
     }
-
     @BeforeEach
     void setup() throws Exception {
         manager = new EscapeGameBuilder("master_configurations/R2SQUARE1.egc").makeGameManager();

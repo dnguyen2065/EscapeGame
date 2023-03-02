@@ -22,7 +22,7 @@ public class MoveCheck {
         this.gameInitializer = gameInitializer;
         this.from = from;
         this.to = to;
-        this.playerTurn = gameInitializer.getPlayerTurn(gameInitializer.firstPlayer());
+        this.playerTurn = gameInitializer.currPlayer;
     }
     public static int distance(Coordinate from, Coordinate to, PieceTypeDescriptor pieceTypeDescriptor) {
         EscapePiece.MovementPattern pattern = whatPattern(pieceTypeDescriptor);
@@ -82,7 +82,7 @@ public class MoveCheck {
         if(to.getColumn() <= 0 || to.getRow() <= 0){
             return false;
         }
-        if(gameInitializer.getxMax() < to.getRow() || gameInitializer.getyMax() < to.getColumn()){
+        if((gameInitializer.getxMax() < to.getRow() || gameInitializer.getyMax() < to.getColumn()) && (gameInitializer.getxMax() != 0 || gameInitializer.getyMax() != 0)){
             return false;
         }
         if(!Objects.equals(playerTurn, escapeGameManager.getPieceAt((CoordinateImpl) from).getPlayer())){
@@ -97,48 +97,22 @@ public class MoveCheck {
         return true;
     }
     public boolean isValidMove() {
-        EscapeGameManagerImpl escapeGameManager = new EscapeGameManagerImpl(gameInitializer);
+        EscapeGameManagerImpl<CoordinateImpl> escapeGameManager = new EscapeGameManagerImpl<>(gameInitializer);
 
         for (PieceTypeDescriptor pieceTypeDescriptor : gameInitializer.getPieceTypes()) {
             if(pieceTypeDescriptor.getPieceName().equals(escapeGameManager.getPieceAt((CoordinateImpl) from).getName())) {
                 if (pieceTypeDescriptor.getMovementPattern().equals(EscapePiece.MovementPattern.LINEAR)) {
-
-                    if (pieceTypeDescriptor.getAttribute(EscapePiece.PieceAttributeID.DISTANCE).getValue() < distance(from, to, pieceTypeDescriptor)) {
-                        return false;
-                    } else {
-                        return makeMove();
-                    }
+                    return pieceTypeDescriptor.getAttribute(EscapePiece.PieceAttributeID.DISTANCE).getValue() >= distance(from, to, pieceTypeDescriptor);
                 } else if (pieceTypeDescriptor.getMovementPattern().equals(EscapePiece.MovementPattern.ORTHOGONAL)) {
-                    if (pieceTypeDescriptor.getAttribute(EscapePiece.PieceAttributeID.DISTANCE).getValue() < distance(from, to, pieceTypeDescriptor)) {
-                        return false;
-                    } else {
-                        return makeMove();
-
-                    }
+                    return pieceTypeDescriptor.getAttribute(EscapePiece.PieceAttributeID.DISTANCE).getValue() >= distance(from, to, pieceTypeDescriptor);
                 } else if (pieceTypeDescriptor.getMovementPattern().equals(EscapePiece.MovementPattern.OMNI)) {
-                    if (pieceTypeDescriptor.getAttribute(EscapePiece.PieceAttributeID.DISTANCE).getValue() < distance(from, to, pieceTypeDescriptor)) {
-                        return false;
-                    } else {
-                        return makeMove();
-
-                    }
+                    return pieceTypeDescriptor.getAttribute(EscapePiece.PieceAttributeID.DISTANCE).getValue() >= distance(from, to, pieceTypeDescriptor);
                 } else if (from.getRow() == to.getRow() && from.getColumn() == to.getColumn()) {
                     return false;
                 }
             }
         }
-
         return false;
     }
-private boolean makeMove() {
-    LocationInitializer[] LI = gameInitializer.getLocationInitializers();
-    for (LocationInitializer locationInitializer : LI) {
-        if (locationInitializer.x == from.getRow() && locationInitializer.y == from.getColumn()) {
-            locationInitializer.x = to.getRow();
-            locationInitializer.y = to.getColumn();
-            return true;
-        }
-    }
-    return false;
-}
+
 }

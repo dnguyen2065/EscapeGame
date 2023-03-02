@@ -1,6 +1,6 @@
   Coordinate type: SQUARE
-  xMax : 8
-  yMax : 8
+  xMax : 0
+  yMax : 0
 
   Players : Gary Chris
 
@@ -10,9 +10,9 @@
       (4, 6) Chris bird
 
   Piece descriptors :
-      frog omni [distance 3]
-      horse orthogonal [distance 3]
-      bird omni [distance 3]
+      frog omni [distance 500]
+      horse orthogonal [distance 500]
+      bird omni [distance 500]
   Rules :
       SCORE 1
       TURN_LIMIT 2

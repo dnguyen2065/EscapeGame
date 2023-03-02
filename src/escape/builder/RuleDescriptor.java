@@ -47,6 +47,14 @@ public class RuleDescriptor
 		this.ruleValue = ruleValue;
 	}
 
+	public RuleID getRuleId() {
+		return ruleId;
+	}
+
+	public int getRuleValue() {
+		return ruleValue;
+	}
+
 	/*
 	 * @see java.lang.Object#toString()
 	 */

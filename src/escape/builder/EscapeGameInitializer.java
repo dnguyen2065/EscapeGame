@@ -42,7 +42,8 @@ public class EscapeGameInitializer
 	
 	// Rule items
 	private RuleDescriptor[] rules;
-    
+	private int numPlayerTurns;
+	public String currPlayer;
     public EscapeGameInitializer()
     {
         // Needed for JAXB
@@ -144,6 +145,7 @@ public class EscapeGameInitializer
 		this.rules = rules;
 	}
 
+
 	/*
 	 * @see java.lang.Object#toString()
 	 */
@@ -155,26 +157,27 @@ public class EscapeGameInitializer
 		    + Arrays.toString(locationInitializers) + ", types="
 		    + Arrays.toString(pieceTypes) + "]";
 	}
-	public String getPlayerTurn(String lastPlayer)
+	public int getNumPlayerTurns()
 	{
-		for(int i = 0; i < locationInitializers.length; i++)
-		{
-			if(locationInitializers[i].player.equals(lastPlayer))
-			{
-				if(i == locationInitializers.length - 1)
-				{
-					return locationInitializers[0].player;
-				}
-				else
-				{
-					return locationInitializers[i + 1].player;
-				}
-			}
+		return numPlayerTurns;
+	}
+	public void playerTurn()
+	{
+
+		String originalPlayer = locationInitializers[0].player;
+		String opponentPlayer = locationInitializers[1].player;
+		if (currPlayer.equals(originalPlayer)) {
+			numPlayerTurns++;
+			currPlayer = opponentPlayer;
+		} else {
+			numPlayerTurns++;
+			currPlayer = originalPlayer;
 		}
-		return locationInitializers[0].player;
+
 	}
 	public String firstPlayer()
 	{
+		currPlayer = locationInitializers[0].player;
 		return locationInitializers[0].player;
 	}
 

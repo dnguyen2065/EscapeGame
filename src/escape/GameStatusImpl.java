@@ -3,6 +3,7 @@ package escape;
 import escape.builder.EscapeGameInitializer;
 import escape.builder.LocationInitializer;
 import escape.builder.PieceTypeDescriptor;
+import escape.builder.RuleDescriptor;
 import escape.required.Coordinate;
 import escape.required.EscapePiece;
 import escape.required.GameStatus;
@@ -16,10 +17,10 @@ public class GameStatusImpl implements GameStatus {
 
     EscapePiece piece;
     EscapeGameInitializer gameInitializer;
-    Coordinate from;
-    Coordinate to;
+    CoordinateImpl from;
+    CoordinateImpl to;
 
-    public GameStatusImpl(EscapePiece piece, EscapeGameInitializer gameInitializer, Coordinate from, Coordinate to) {
+    public GameStatusImpl(EscapePiece piece, EscapeGameInitializer gameInitializer, CoordinateImpl from, CoordinateImpl to) {
         this.piece = piece;
         this.gameInitializer = gameInitializer;
         this.from = from;
@@ -44,6 +45,11 @@ public class GameStatusImpl implements GameStatus {
 
     @Override
     public MoveResult getMoveResult () {
+        RuleDescriptor[] rules = gameInitializer.getRules();
+        int numTurns = gameInitializer.getNumPlayerTurns();
+        if (numTurns >= rules[1].ruleValue * 2){
+            return MoveResult.WIN;
+        }
         return MoveResult.NONE;
     }
 

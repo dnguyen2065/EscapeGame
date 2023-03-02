@@ -32,3 +32,6 @@ Piece descriptors:
     frog orthogonal [distance 3]
     dog linear [distance 5]
     snail omni [distance 1]
+Rules :
+    SCORE 1
+    TURN_LIMIT 2

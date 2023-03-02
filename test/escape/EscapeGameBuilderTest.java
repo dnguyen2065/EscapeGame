@@ -7,7 +7,9 @@ import escape.builder.EscapeGameInitializer;
 import escape.builder.PieceTypeDescriptor;
 import escape.required.Coordinate;
 import escape.required.EscapePiece;
+import escape.required.GameStatus;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 
 import static org.junit.Assert.*;
 
@@ -163,6 +165,7 @@ public class EscapeGameBuilderTest {
         GameStatusImpl gameStatus = new GameStatusImpl(escapePiece, egi, from, to);
         assertFalse(gameStatus.isValidMove());
     }
+    //FINAL TESTS ----------------------------------------------------
 
     @Test
     public void testFirstPlayerUp() throws Exception {
@@ -170,6 +173,40 @@ public class EscapeGameBuilderTest {
         EscapeGameInitializer egi = egm.getGameInitializer();
         String firstPlayer = egi.firstPlayer();
         assertEquals("Gary", firstPlayer);
+    }
+
+
+    @Test
+    public void testGetPlayerTurn() throws Exception {
+        EscapeGameBuilder egb =  new EscapeGameBuilder("configurations/config.egc");
+        EscapeGameManager egm = egb.makeGameManager();
+        EscapeGameInitializer egi = egb.getGameInitializer();
+        egi.firstPlayer();
+        assertEquals("Gary", egi.currPlayer);
+        egm.move(egm.makeCoordinate(4, 4), egm.makeCoordinate(2, 2));
+        assertEquals("Chris", egi.currPlayer);
+        egm.move(egm.makeCoordinate(4, 6), egm.makeCoordinate(2, 6));
+        assertEquals("Gary", egi.currPlayer);
+    }
+
+    @Test
+    public void testInfBoard() throws Exception {
+        EscapeGameBuilder egb =  new EscapeGameBuilder("configurations/infconfig.egc");
+        EscapeGameManager<Coordinate> egm =  egb.makeGameManager();
+        GameStatus gs = egm.move(egm.makeCoordinate(4, 4), egm.makeCoordinate(4, 6));
+        assertTrue(gs.isValidMove());
+    }
+    @Test
+    public void testWinGame() throws Exception {
+        EscapeGameBuilder egb =  new EscapeGameBuilder("configurations/config.egc");
+        EscapeGameManager egm =  egb.makeGameManager();
+        EscapeGameInitializer egi = egb.getGameInitializer();
+        GameStatus gs;
+        egm.move(egm.makeCoordinate(4, 4), egm.makeCoordinate(2, 2));
+        egm.move(egm.makeCoordinate(4, 6), egm.makeCoordinate(2, 6));
+        egm.move(egm.makeCoordinate(2, 2), egm.makeCoordinate(1, 1));
+        gs = egm.move(egm.makeCoordinate(2, 6), egm.makeCoordinate(1, 6));
+        assertEquals(gs.getMoveResult(), GameStatus.MoveResult.WIN);
     }
 
 
