@@ -2,15 +2,10 @@ package escape;
 
 import escape.builder.EscapeGameInitializer;
 import escape.builder.LocationInitializer;
-import escape.builder.PieceTypeDescriptor;
-import escape.builder.RuleDescriptor;
 import escape.required.Coordinate;
 import escape.required.EscapePiece;
 import escape.required.GameStatus;
-
-import java.util.Objects;
-
-import static escape.MoveCheck.distance;
+import escape.required.LocationType;
 
 public class GameStatusImpl implements GameStatus {
 
@@ -44,10 +39,19 @@ public class GameStatusImpl implements GameStatus {
 
     @Override
     public MoveResult getMoveResult() {
-        RuleDescriptor[] rules = gameInitializer.getRules();
+        System.out.println(gameInitializer.currPlayer + ": " + gameInitializer.originalPlayerScore);
+        System.out.println(gameInitializer.prevPlayer + ": " + gameInitializer.opponentPlayerScore);
+        Score score = new Score(gameInitializer.prevPlayer, gameInitializer);
+
         int numTurns = gameInitializer.getNumPlayerTurns();
-        if (numTurns >= rules[1].ruleValue * 2) {
-            return MoveResult.WIN;
+        if (numTurns >= score.getTurnLimit() * 2) {
+            if (gameInitializer.originalPlayerScore == gameInitializer.opponentPlayerScore) {
+                return MoveResult.DRAW;
+            } else if (gameInitializer.opponentPlayerScore < gameInitializer.originalPlayerScore) {
+                return MoveResult.WIN;
+            } else {
+                return MoveResult.LOSE;
+            }
         }
         return MoveResult.NONE;
     }

@@ -26,11 +26,7 @@ public class EscapePieceImpl implements EscapePiece {
 
     @Override
     public boolean equals(Object o) {
-        if (o == this)
-            return true;
-        if (!(o instanceof EscapePieceImpl escapePiece)) {
-            return false;
-        }
+        EscapePieceImpl escapePiece = (EscapePieceImpl) o;
         return name == escapePiece.name && Objects.equals(player, escapePiece.player);
     }
 

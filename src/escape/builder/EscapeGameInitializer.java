@@ -21,173 +21,164 @@ import java.util.*;
  * An example of reading a game configuration file and storing the information in this
  * data object. Using this object, you can get the information needed to create your
  * game.
- * 
+ * <p>
  * MODIFIABLE: YES
  * MOVEABLE: NO
  * REQUIRED: NO
- * 
+ *
  * @see EscapeGameBuilder#makeGameManager()
  */
 @XmlRootElement
-public class EscapeGameInitializer
-{
-	private CoordinateType coordinateType;
-	
-	// Board items
-	private int xMax, yMax;
-	private LocationInitializer[] locationInitializers;
-	
-	// Piece items
-	private PieceTypeDescriptor[] pieceTypes;
-	
-	// Rule items
-	private RuleDescriptor[] rules;
-	private int numPlayerTurns;
-	public String currPlayer;
-    public EscapeGameInitializer()
-    {
+public class EscapeGameInitializer {
+    private CoordinateType coordinateType;
+
+    // Board items
+    private int xMax, yMax;
+    private LocationInitializer[] locationInitializers;
+
+    // Piece items
+    private PieceTypeDescriptor[] pieceTypes;
+
+    // Rule items
+    private RuleDescriptor[] rules;
+    private int numPlayerTurns;
+    public String currPlayer;
+    public int originalPlayerScore;
+    public String prevPlayer;
+    public int opponentPlayerScore;
+
+    public EscapeGameInitializer() {
         // Needed for JAXB
     }
 
     /**
      * @return the coordinateType
      */
-    public CoordinateType getCoordinateType()
-    {
+    public CoordinateType getCoordinateType() {
         return coordinateType;
     }
 
     /**
      * @param coordinateType the coordinateType to set
      */
-    public void setCoordinateType(CoordinateType coordinateType)
-    {
+    public void setCoordinateType(CoordinateType coordinateType) {
         this.coordinateType = coordinateType;
     }
 
-	/**
-	 * @return the xMax
-	 */
-	public int getxMax()
-	{
-		return xMax;
-	}
+    /**
+     * @return the xMax
+     */
+    public int getxMax() {
+        return xMax;
+    }
 
-	/**
-	 * @param xMax the xMax to set
-	 */
-	public void setxMax(int xMax)
-	{
-		this.xMax = xMax;
-	}
+    /**
+     * @param xMax the xMax to set
+     */
+    public void setxMax(int xMax) {
+        this.xMax = xMax;
+    }
 
-	/**
-	 * @return the yMax
-	 */
-	public int getyMax()
-	{
-		return yMax;
-	}
+    /**
+     * @return the yMax
+     */
+    public int getyMax() {
+        return yMax;
+    }
 
-	/**
-	 * @param yMax the yMax to set
-	 */
-	public void setyMax(int yMax)
-	{
-		this.yMax = yMax;
-	}
+    /**
+     * @param yMax the yMax to set
+     */
+    public void setyMax(int yMax) {
+        this.yMax = yMax;
+    }
 
-	/**
-	 * @return the locationInitializers
-	 */
-	public LocationInitializer[] getLocationInitializers()
-	{
-		return locationInitializers;
-	}
+    /**
+     * @return the locationInitializers
+     */
+    public LocationInitializer[] getLocationInitializers() {
+        return locationInitializers;
+    }
 
-	/**
-	 * @param locationInitializers the locationInitializers to set
-	 */
-	public void setLocationInitializers(LocationInitializer ... locationInitializers)
-	{
-		this.locationInitializers = locationInitializers;
-	}
+    /**
+     * @param locationInitializers the locationInitializers to set
+     */
+    public void setLocationInitializers(LocationInitializer... locationInitializers) {
+        this.locationInitializers = locationInitializers;
+    }
 
-	/**
-	 * @return the types
-	 */
-	public PieceTypeDescriptor[] getPieceTypes()
-	{
-		return pieceTypes;
-	}
+    /**
+     * @return the types
+     */
+    public PieceTypeDescriptor[] getPieceTypes() {
+        return pieceTypes;
+    }
 
-	/**
-	 * @param types the types to set
-	 */
-	public void setPieceTypes(PieceTypeDescriptor ... types)
-	{
-		this.pieceTypes = types;
-	}
+    /**
+     * @param types the types to set
+     */
+    public void setPieceTypes(PieceTypeDescriptor... types) {
+        this.pieceTypes = types;
+    }
 
-	/**
-	 * @return the rules
-	 */
-	public RuleDescriptor[] getRules()
-	{
-		return rules;
-	}
+    /**
+     * @return the rules
+     */
+    public RuleDescriptor[] getRules() {
+        return rules;
+    }
 
-	/**
-	 * @param rules the rules to set
-	 */
-	public void setRules(RuleDescriptor[] rules)
-	{
-		this.rules = rules;
-	}
+    /**
+     * @param rules the rules to set
+     */
+    public void setRules(RuleDescriptor[] rules) {
+        this.rules = rules;
+    }
 
 
-	/*
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString()
-	{
-		return "EscapeGameInitializer [xMax=" + xMax + ", yMax=" + yMax
-		    + ", coordinateType=" + coordinateType + ", locationInitializers="
-		    + Arrays.toString(locationInitializers) + ", types="
-		    + Arrays.toString(pieceTypes) + "]";
-	}
-	public int getNumPlayerTurns()
-	{
-		return numPlayerTurns;
-	}
-	public void playerTurn()
-	{
+    /*
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return "EscapeGameInitializer [xMax=" + xMax + ", yMax=" + yMax
+                + ", coordinateType=" + coordinateType + ", locationInitializers="
+                + Arrays.toString(locationInitializers) + ", types="
+                + Arrays.toString(pieceTypes) + "]";
+    }
 
-		String originalPlayer = locationInitializers[0].player;
-		String opponentPlayer = null;
-		for(LocationInitializer li : locationInitializers)
-		{
-			if(!li.player.equals(originalPlayer)){
-				opponentPlayer = li.player;
-				break;
-			}
+    public int getNumPlayerTurns() {
+        return numPlayerTurns;
+    }
 
-		}
-	
-		if (currPlayer.equals(originalPlayer)) {
-			numPlayerTurns++;
-			currPlayer = opponentPlayer;
-		} else {
-			numPlayerTurns++;
-			currPlayer = originalPlayer;
-		}
+    public String originalPlayer = null;
+    public String opponentPlayer = null;
 
-	}
-	public String firstPlayer()
-	{
-		currPlayer = locationInitializers[0].player;
-		return locationInitializers[0].player;
-	}
+    public void playerTurn() {
+
+        originalPlayer = locationInitializers[0].player;
+        for (LocationInitializer li : locationInitializers) {
+            if (!li.player.equals(originalPlayer)) {
+                opponentPlayer = li.player;
+                break;
+            }
+
+        }
+        if (currPlayer.equals(originalPlayer)) {
+            numPlayerTurns++;
+            currPlayer = opponentPlayer;
+            prevPlayer = originalPlayer;
+        } else {
+            numPlayerTurns++;
+            currPlayer = originalPlayer;
+            prevPlayer = opponentPlayer;
+        }
+
+    }
+
+    public String firstPlayer() {
+        currPlayer = locationInitializers[0].player;
+        return locationInitializers[0].player;
+    }
 
 }

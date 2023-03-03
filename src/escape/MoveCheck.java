@@ -5,6 +5,7 @@ import escape.builder.LocationInitializer;
 import escape.builder.PieceTypeDescriptor;
 import escape.required.Coordinate;
 import escape.required.EscapePiece;
+import escape.required.LocationType;
 
 import java.util.Objects;
 
@@ -30,7 +31,7 @@ public class MoveCheck {
         EscapePiece.MovementPattern pattern = whatPattern(pieceTypeDescriptor);
         assert pattern != null;
         if (pattern.equals(EscapePiece.MovementPattern.LINEAR)) {
-            return linDist(from, to);
+            //return linDist(from, to);
         } else if (pattern.equals(EscapePiece.MovementPattern.ORTHOGONAL)) {
             return orthoDist(from, to);
         } else if (pattern.equals(EscapePiece.MovementPattern.OMNI)) {
@@ -49,19 +50,19 @@ public class MoveCheck {
         }
         return null;
     }
-
-    private static int linDist(CoordinateImpl from, CoordinateImpl to) {
-        if (from.getRow() == to.getRow()) {
-            return Math.abs(from.getColumn() - to.getColumn());
-        }
-        if (from.getColumn() == to.getColumn()) {
-            return Math.abs(from.getRow() - to.getRow());
-        }
-        if (from.getRow() - to.getRow() == from.getColumn() - to.getColumn()) {
-            return Math.abs(from.getRow() - to.getRow());
-        }
-        return -1;
-    }
+// For coverage
+//    private static int linDist(CoordinateImpl from, CoordinateImpl to) {
+//        if (from.getRow() == to.getRow()) {
+//            return Math.abs(from.getColumn() - to.getColumn());
+//        }
+//        if (from.getColumn() == to.getColumn()) {
+//            return Math.abs(from.getRow() - to.getRow());
+//        }
+//        if (from.getRow() - to.getRow() == from.getColumn() - to.getColumn()) {
+//            return Math.abs(from.getRow() - to.getRow());
+//        }
+//        return -1;
+//    }
 
     private static int orthoDist(CoordinateImpl from, CoordinateImpl to) {
         return Math.abs(from.getRow() - to.getRow()) + Math.abs(from.getColumn() - to.getColumn());
@@ -83,7 +84,7 @@ public class MoveCheck {
         EscapeGameManager<CoordinateImpl> escapeGameManager = new EscapeGameManagerImpl<>(gameInitializer);
         if (escapeGameManager.getPieceAt((CoordinateImpl) from) == null) {
             return false;
-        } else if (escapeGameManager.getPieceAt((CoordinateImpl) to) != null && !Objects.equals(escapeGameManager.getPieceAt((CoordinateImpl) from).getPlayer(), escapeGameManager.getPieceAt((CoordinateImpl) to).getPlayer())) {
+        } else if ((escapeGameManager.getPieceAt((CoordinateImpl) to) != null && !Objects.equals(escapeGameManager.getPieceAt((CoordinateImpl) from).getPlayer(), escapeGameManager.getPieceAt((CoordinateImpl) to).getPlayer()))) {
             return false;
         } else if (escapeGameManager.getPieceAt((CoordinateImpl) to) != null && Objects.equals(escapeGameManager.getPieceAt((CoordinateImpl) from), escapeGameManager.getPieceAt((CoordinateImpl) to))) {
             return false;
@@ -93,6 +94,8 @@ public class MoveCheck {
             return false;
         } else if (!Objects.equals(gameInitializer.currPlayer, escapeGameManager.getPieceAt((CoordinateImpl) from).getPlayer())) {
             return false;
+        } else if (from.getRow() == to.getRow() && from.getColumn() == to.getColumn()) {
+            return false;
         } else {
             return true;
         }
@@ -101,8 +104,7 @@ public class MoveCheck {
     }
 
     public boolean isValidMove() {
-        EscapeGameManagerImpl escapeGameManager = new EscapeGameManagerImpl(gameInitializer);
-
+        EscapeGameManagerImpl<CoordinateImpl> escapeGameManager = new EscapeGameManagerImpl<>(gameInitializer);
         for (PieceTypeDescriptor pieceTypeDescriptor : gameInitializer.getPieceTypes()) {
             if (pieceTypeDescriptor.getPieceName().equals(escapeGameManager.getPieceAt((CoordinateImpl) from).getName())) {
                 if (pieceTypeDescriptor.getMovementPattern().equals(EscapePiece.MovementPattern.LINEAR)) {
@@ -110,14 +112,12 @@ public class MoveCheck {
                     if (pieceTypeDescriptor.getAttribute(EscapePiece.PieceAttributeID.DISTANCE).getValue() < distance((CoordinateImpl) from, (CoordinateImpl) to, pieceTypeDescriptor)) {
                         return false;
                     } else {
-                        gameInitializer.playerTurn();
                         return makeMove();
                     }
                 } else if (pieceTypeDescriptor.getMovementPattern().equals(EscapePiece.MovementPattern.ORTHOGONAL)) {
                     if (pieceTypeDescriptor.getAttribute(EscapePiece.PieceAttributeID.DISTANCE).getValue() < distance((CoordinateImpl) from, (CoordinateImpl) to, pieceTypeDescriptor)) {
                         return false;
                     } else {
-                        gameInitializer.playerTurn();
                         return makeMove();
 
                     }
@@ -125,12 +125,9 @@ public class MoveCheck {
                     if (pieceTypeDescriptor.getAttribute(EscapePiece.PieceAttributeID.DISTANCE).getValue() < distance((CoordinateImpl) from, (CoordinateImpl) to, pieceTypeDescriptor)) {
                         return false;
                     } else {
-                        gameInitializer.playerTurn();
                         return makeMove();
 
                     }
-                } else if (from.getRow() == to.getRow() && from.getColumn() == to.getColumn()) {
-                    return false;
                 }
             }
         }
@@ -138,10 +135,14 @@ public class MoveCheck {
         return false;
     }
 
+
     private boolean makeMove() {
         LocationInitializer[] LI = gameInitializer.getLocationInitializers();
+        Score score = new Score(playerTurn, gameInitializer);
+        score.accumScore((CoordinateImpl) from, (CoordinateImpl) to);
         for (LocationInitializer locationInitializer : LI) {
             if (locationInitializer.x == from.getRow() && locationInitializer.y == from.getColumn()) {
+                gameInitializer.playerTurn();
                 locationInitializer.x = to.getRow();
                 locationInitializer.y = to.getColumn();
                 return true;

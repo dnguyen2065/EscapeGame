@@ -5,6 +5,7 @@ import escape.builder.LocationInitializer;
 import escape.required.Coordinate;
 import escape.required.EscapePiece;
 import escape.required.GameStatus;
+import escape.required.LocationType;
 
 
 public class EscapeGameManagerImpl<C extends Coordinate> implements EscapeGameManager<CoordinateImpl> {
@@ -33,7 +34,10 @@ public class EscapeGameManagerImpl<C extends Coordinate> implements EscapeGameMa
 
         for (LocationInitializer locationInitializer : locationInitializers) {
             if (locationInitializer.x == coordinate.getRow() && locationInitializer.y == coordinate.getColumn()) {
-                return new EscapePieceImpl(locationInitializer.pieceName, locationInitializer.player);
+                if (locationInitializer.locationType != LocationType.EXIT) {
+                    return new EscapePieceImpl(locationInitializer.pieceName, locationInitializer.player);
+
+                }
             }
         }
         return null;
@@ -43,7 +47,6 @@ public class EscapeGameManagerImpl<C extends Coordinate> implements EscapeGameMa
     public GameStatus move(CoordinateImpl from, CoordinateImpl to) {
         GameStatus gameStatus = new GameStatusImpl(getPieceAt(from), gameInitializer, from, to);
         if (gameInitializer.getNumPlayerTurns() == 0) {
-            System.out.println("First player is " + gameInitializer.firstPlayer());
             gameInitializer.firstPlayer();
         }
 
@@ -51,13 +54,5 @@ public class EscapeGameManagerImpl<C extends Coordinate> implements EscapeGameMa
         return gameStatus;
     }
 
-    private void makeMove(CoordinateImpl from, CoordinateImpl to) {
-        for (LocationInitializer locationInitializer : locationInitializers) {
-            if (locationInitializer.x == from.getRow() && locationInitializer.y == from.getColumn()) {
-                locationInitializer.x = to.getRow();
-                locationInitializer.y = to.getColumn();
-            }
-        }
-    }
 
 }

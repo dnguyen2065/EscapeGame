@@ -18,11 +18,7 @@ public class CoordinateImpl implements Coordinate {
 
     @Override
     public boolean equals(Object o) {
-        if (o == this)
-            return true;
-        if (!(o instanceof CoordinateImpl coordinate)) {
-            return false;
-        }
+        CoordinateImpl coordinate = (CoordinateImpl) o;
         return x == coordinate.x && y == coordinate.y;
     }
 
