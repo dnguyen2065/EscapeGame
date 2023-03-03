@@ -14,8 +14,6 @@ public class EscapePieceImpl implements EscapePiece {
         this.player = player;
     }
 
-
-
     @Override
     public String getPlayer() {
         return player;
@@ -33,7 +31,7 @@ public class EscapePieceImpl implements EscapePiece {
         if (!(o instanceof EscapePieceImpl escapePiece)) {
             return false;
         }
-        return Objects.equals(name, escapePiece.name) && Objects.equals(player, escapePiece.player);
+        return name == escapePiece.name && Objects.equals(player, escapePiece.player);
     }
 
 }

@@ -7,58 +7,57 @@ import escape.required.EscapePiece;
 import escape.required.GameStatus;
 
 
-public class EscapeGameManagerImpl<C extends Coordinate> implements EscapeGameManager<CoordinateImpl>
-{
+public class EscapeGameManagerImpl<C extends Coordinate> implements EscapeGameManager<CoordinateImpl> {
     private EscapeGameInitializer gameInitializer;
-
-
+    int boardX;
+    int boardY;
+    Coordinate.CoordinateType coordinateType;
     private String[] players;
+    private LocationInitializer[] locationInitializers;
 
     public EscapeGameManagerImpl(EscapeGameInitializer gameInitializer) {
         this.gameInitializer = gameInitializer;
-        int boardX = gameInitializer.getxMax();
-        int boardY = gameInitializer.getyMax();
-        Coordinate.CoordinateType coordinateType = gameInitializer.getCoordinateType();
+        this.boardX = gameInitializer.getxMax();
+        this.boardY = gameInitializer.getyMax();
+        this.coordinateType = gameInitializer.getCoordinateType();
+        this.locationInitializers = gameInitializer.getLocationInitializers();
     }
+
     @Override
     public CoordinateImpl makeCoordinate(int x, int y) {
         return new CoordinateImpl(x, y);
     }
 
     @Override
-    public EscapePiece getPieceAt(CoordinateImpl coordinate) {
-        LocationInitializer[] LI = gameInitializer.getLocationInitializers();
+    public EscapePieceImpl getPieceAt(CoordinateImpl coordinate) {
 
-        for (LocationInitializer locationInitializer : LI) {
+        for (LocationInitializer locationInitializer : locationInitializers) {
             if (locationInitializer.x == coordinate.getRow() && locationInitializer.y == coordinate.getColumn()) {
                 return new EscapePieceImpl(locationInitializer.pieceName, locationInitializer.player);
             }
         }
         return null;
     }
+
     @Override
-    public GameStatus move (CoordinateImpl from, CoordinateImpl to) {
-        GameStatusImpl gameStatus = new GameStatusImpl(getPieceAt(from), gameInitializer, from, to);
-        if(gameInitializer.getNumPlayerTurns() == 0){
+    public GameStatus move(CoordinateImpl from, CoordinateImpl to) {
+        GameStatus gameStatus = new GameStatusImpl(getPieceAt(from), gameInitializer, from, to);
+        if (gameInitializer.getNumPlayerTurns() == 0) {
+            System.out.println("First player is " + gameInitializer.firstPlayer());
             gameInitializer.firstPlayer();
         }
-        if (gameStatus.isValidMove()) {
-            System.out.println("Valid Move");
-            makeMove(from, to);
-            gameInitializer.playerTurn();
-        }
+
+
         return gameStatus;
     }
-    private  void makeMove(CoordinateImpl from, CoordinateImpl to) {
-        LocationInitializer[] LI = gameInitializer.getLocationInitializers();
-        for (LocationInitializer locationInitializer : LI) {
+
+    private void makeMove(CoordinateImpl from, CoordinateImpl to) {
+        for (LocationInitializer locationInitializer : locationInitializers) {
             if (locationInitializer.x == from.getRow() && locationInitializer.y == from.getColumn()) {
                 locationInitializer.x = to.getRow();
                 locationInitializer.y = to.getColumn();
-
             }
         }
-
     }
 
 }

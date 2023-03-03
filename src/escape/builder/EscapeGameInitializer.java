@@ -165,7 +165,16 @@ public class EscapeGameInitializer
 	{
 
 		String originalPlayer = locationInitializers[0].player;
-		String opponentPlayer = locationInitializers[1].player;
+		String opponentPlayer = null;
+		for(LocationInitializer li : locationInitializers)
+		{
+			if(!li.player.equals(originalPlayer)){
+				opponentPlayer = li.player;
+				break;
+			}
+
+		}
+	
 		if (currPlayer.equals(originalPlayer)) {
 			numPlayerTurns++;
 			currPlayer = opponentPlayer;

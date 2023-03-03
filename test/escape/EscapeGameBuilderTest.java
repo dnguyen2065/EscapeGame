@@ -17,17 +17,17 @@ public class EscapeGameBuilderTest {
 
     @Test
     public void test() {
-       EscapeGameManager egm = null;
-         try {
-              egm = new EscapeGameBuilder("configurations/config.egc").makeGameManager();
-         } catch (Exception e) {
-              fail("Exception from builder: " + e.getMessage());
-         }
-         assertNotNull(egm);
+        EscapeGameManager egm = null;
+        try {
+            egm = new EscapeGameBuilder("configurations/config.egc").makeGameManager();
+        } catch (Exception e) {
+            fail("Exception from builder: " + e.getMessage());
+        }
+        assertNotNull(egm);
     }
 
     @Test
-    public void testCoordinateEquals(){
+    public void testCoordinateEquals() {
         CoordinateImpl coordinate = new CoordinateImpl(1, 1);
         CoordinateImpl coordinate2 = new CoordinateImpl(1, 1);
         assertTrue(coordinate.equals(coordinate2));
@@ -35,7 +35,7 @@ public class EscapeGameBuilderTest {
     }
 
     @Test
-    public void testCoordinateEquals2(){
+    public void testCoordinateEquals2() {
         CoordinateImpl coordinate = new CoordinateImpl(1, 1);
         CoordinateImpl coordinate2 = new CoordinateImpl(2, 2);
         assertFalse(coordinate.equals(coordinate2));
@@ -43,7 +43,7 @@ public class EscapeGameBuilderTest {
     }
 
     @Test
-    public void testMakeCoordinate(){
+    public void testMakeCoordinate() {
         EscapeGameInitializer gameInitializer = new EscapeGameInitializer();
         EscapeGameManagerImpl<Coordinate> egm = new EscapeGameManagerImpl<>(gameInitializer);
         CoordinateImpl testCoord = new CoordinateImpl(1, 1);
@@ -52,7 +52,7 @@ public class EscapeGameBuilderTest {
     }
 
     @Test
-    public void testMakeCoordinate2(){
+    public void testMakeCoordinate2() {
         EscapeGameInitializer gameInitializer = new EscapeGameInitializer();
         EscapeGameManagerImpl<Coordinate> egm = new EscapeGameManagerImpl<>(gameInitializer);
         CoordinateImpl testCoord = new CoordinateImpl(1, 1);
@@ -61,14 +61,14 @@ public class EscapeGameBuilderTest {
     }
 
     @Test
-    public void testGetRow(){
+    public void testGetRow() {
         CoordinateImpl coordinate = new CoordinateImpl(1, 1);
         assertEquals(1, coordinate.getRow());
         assertNotEquals(2, coordinate.getRow());
     }
 
     @Test
-    public void testGetColumn(){
+    public void testGetColumn() {
         CoordinateImpl coordinate = new CoordinateImpl(1, 1);
         assertEquals(1, coordinate.getColumn());
         assertNotEquals(2, coordinate.getColumn());
@@ -77,7 +77,7 @@ public class EscapeGameBuilderTest {
     //RELEASE 2 ----------------------------------------------------
 
     @Test
-    public void testGetCoordinateType(){
+    public void testGetCoordinateType() {
         EscapeGameInitializer gameInitializer = new EscapeGameInitializer();
         gameInitializer.setCoordinateType(Coordinate.CoordinateType.SQUARE);
         assertEquals(Coordinate.CoordinateType.SQUARE, gameInitializer.getCoordinateType());
@@ -90,8 +90,9 @@ public class EscapeGameBuilderTest {
         assertNotEquals("Bob", escapePiece.getPlayer());
 
     }
+
     @Test
-    public void testGetName()  {
+    public void testGetName() {
         EscapePieceImpl escapePiece = new EscapePieceImpl(EscapePiece.PieceName.FROG, "Gary");
         assertEquals(EscapePiece.PieceName.FROG, escapePiece.getName());
         assertNotEquals(EscapePiece.PieceName.HORSE, escapePiece.getName());
@@ -113,7 +114,7 @@ public class EscapeGameBuilderTest {
 
     @Test
     public void testGetPieceAt() throws Exception {
-        EscapeGameManager egm =  new EscapeGameBuilder("configurations/config.egc").makeGameManager();
+        EscapeGameManager egm = new EscapeGameBuilder("configurations/config.egc").makeGameManager();
         CoordinateImpl coordinate = new CoordinateImpl(4, 4);
         EscapePieceImpl escapePiece = new EscapePieceImpl(EscapePiece.PieceName.FROG, "Gary");
         EscapePieceImpl escapePiece2 = new EscapePieceImpl(EscapePiece.PieceName.HORSE, "Mark");
@@ -123,7 +124,7 @@ public class EscapeGameBuilderTest {
 
     @Test
     public void testIsValidMove() throws Exception {
-        EscapeGameBuilder egm =  new EscapeGameBuilder("configurations/config.egc");
+        EscapeGameBuilder egm = new EscapeGameBuilder("configurations/config.egc");
         EscapeGameInitializer egi = egm.getGameInitializer();
         EscapePieceImpl escapePiece = new EscapePieceImpl(EscapePiece.PieceName.FROG, "Gary");
         CoordinateImpl from = new CoordinateImpl(4, 4);
@@ -135,7 +136,7 @@ public class EscapeGameBuilderTest {
 
     @Test
     public void testIsValidMove2() throws Exception {
-        EscapeGameBuilder egm =  new EscapeGameBuilder("configurations/config.egc");
+        EscapeGameBuilder egm = new EscapeGameBuilder("configurations/config.egc");
         EscapeGameInitializer egi = egm.getGameInitializer();
         EscapePieceImpl escapePiece = new EscapePieceImpl(EscapePiece.PieceName.BIRD, "Chris");
         CoordinateImpl from = new CoordinateImpl(4, 6);
@@ -146,7 +147,7 @@ public class EscapeGameBuilderTest {
 
     @Test
     public void testIsValidMove3() throws Exception {
-        EscapeGameBuilder egm =  new EscapeGameBuilder("configurations/config.egc");
+        EscapeGameBuilder egm = new EscapeGameBuilder("configurations/config.egc");
         EscapeGameInitializer egi = egm.getGameInitializer();
         EscapePieceImpl escapePiece = new EscapePieceImpl(EscapePiece.PieceName.HORSE, "Chris");
         CoordinateImpl from = new CoordinateImpl(4, 5);
@@ -157,7 +158,7 @@ public class EscapeGameBuilderTest {
 
     @Test
     public void testIsValidMove4() throws Exception {
-        EscapeGameBuilder egm =  new EscapeGameBuilder("configurations/config.egc");
+        EscapeGameBuilder egm = new EscapeGameBuilder("configurations/config.egc");
         EscapeGameInitializer egi = egm.getGameInitializer();
         EscapePieceImpl escapePiece = new EscapePieceImpl(EscapePiece.PieceName.FROG, "Gary");
         CoordinateImpl from = new CoordinateImpl(4, 4);
@@ -169,7 +170,7 @@ public class EscapeGameBuilderTest {
 
     @Test
     public void testFirstPlayerUp() throws Exception {
-        EscapeGameBuilder egm =  new EscapeGameBuilder("configurations/config.egc");
+        EscapeGameBuilder egm = new EscapeGameBuilder("configurations/config.egc");
         EscapeGameInitializer egi = egm.getGameInitializer();
         String firstPlayer = egi.firstPlayer();
         assertEquals("Gary", firstPlayer);
@@ -178,7 +179,7 @@ public class EscapeGameBuilderTest {
 
     @Test
     public void testGetPlayerTurn() throws Exception {
-        EscapeGameBuilder egb =  new EscapeGameBuilder("configurations/config.egc");
+        EscapeGameBuilder egb = new EscapeGameBuilder("configurations/config.egc");
         EscapeGameManager egm = egb.makeGameManager();
         EscapeGameInitializer egi = egb.getGameInitializer();
         egi.firstPlayer();
@@ -191,21 +192,29 @@ public class EscapeGameBuilderTest {
 
     @Test
     public void testInfBoard() throws Exception {
-        EscapeGameBuilder egb =  new EscapeGameBuilder("configurations/infconfig.egc");
-        EscapeGameManager<Coordinate> egm =  egb.makeGameManager();
-        GameStatus gs = egm.move(egm.makeCoordinate(4, 4), egm.makeCoordinate(4, 6));
+        EscapeGameBuilder egb = new EscapeGameBuilder("configurations/infconfig.egc");
+        EscapeGameManager<Coordinate> egm = egb.makeGameManager();
+        GameStatus gs;
+        gs = egm.move(egm.makeCoordinate(4, 4), egm.makeCoordinate(4, 500));
         assertTrue(gs.isValidMove());
+        gs = egm.move(egm.makeCoordinate(4, 500), egm.makeCoordinate(4, 1001));
+        assertFalse(gs.isValidMove());
     }
+
     @Test
     public void testWinGame() throws Exception {
-        EscapeGameBuilder egb =  new EscapeGameBuilder("configurations/config.egc");
-        EscapeGameManager egm =  egb.makeGameManager();
+        EscapeGameBuilder egb = new EscapeGameBuilder("configurations/config.egc");
+        EscapeGameManager egm = egb.makeGameManager();
         EscapeGameInitializer egi = egb.getGameInitializer();
         GameStatus gs;
-        egm.move(egm.makeCoordinate(4, 4), egm.makeCoordinate(2, 2));
-        egm.move(egm.makeCoordinate(4, 6), egm.makeCoordinate(2, 6));
-        egm.move(egm.makeCoordinate(2, 2), egm.makeCoordinate(1, 1));
+        gs = egm.move(egm.makeCoordinate(4, 4), egm.makeCoordinate(2, 2));
+        gs.isValidMove();
+        gs = egm.move(egm.makeCoordinate(4, 6), egm.makeCoordinate(2, 6));
+        gs.isValidMove();
+        gs = egm.move(egm.makeCoordinate(2, 2), egm.makeCoordinate(1, 1));
+        gs.isValidMove();
         gs = egm.move(egm.makeCoordinate(2, 6), egm.makeCoordinate(1, 6));
+        gs.isValidMove();
         assertEquals(gs.getMoveResult(), GameStatus.MoveResult.WIN);
     }
 

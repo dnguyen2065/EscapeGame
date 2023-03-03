@@ -17,10 +17,10 @@ public class GameStatusImpl implements GameStatus {
 
     EscapePiece piece;
     EscapeGameInitializer gameInitializer;
-    CoordinateImpl from;
-    CoordinateImpl to;
+    Coordinate from;
+    Coordinate to;
 
-    public GameStatusImpl(EscapePiece piece, EscapeGameInitializer gameInitializer, CoordinateImpl from, CoordinateImpl to) {
+    public GameStatusImpl(EscapePiece piece, EscapeGameInitializer gameInitializer, Coordinate from, Coordinate to) {
         this.piece = piece;
         this.gameInitializer = gameInitializer;
         this.from = from;
@@ -28,33 +28,32 @@ public class GameStatusImpl implements GameStatus {
     }
 
 
-
     @Override
     public boolean isValidMove() {
         MoveCheck moveCheck = new MoveCheck(piece, gameInitializer, from, to);
-        if (!moveCheck.falseConditions()){
+        if (!moveCheck.falseConditions()) {
             return false;
         }
         return moveCheck.isValidMove();
     }
 
     @Override
-    public boolean isMoreInformation () {
+    public boolean isMoreInformation() {
         return false;
     }
 
     @Override
-    public MoveResult getMoveResult () {
+    public MoveResult getMoveResult() {
         RuleDescriptor[] rules = gameInitializer.getRules();
         int numTurns = gameInitializer.getNumPlayerTurns();
-        if (numTurns >= rules[1].ruleValue * 2){
+        if (numTurns >= rules[1].ruleValue * 2) {
             return MoveResult.WIN;
         }
         return MoveResult.NONE;
     }
 
     @Override
-    public Coordinate finalLocation () {
+    public Coordinate finalLocation() {
         return null;
     }
 
