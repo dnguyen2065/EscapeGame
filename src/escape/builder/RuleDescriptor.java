@@ -18,49 +18,27 @@ import escape.required.Rule.*;
  * A JavaBean that represents an attribute for rule. This file
  * is provided as an example that can be used to initialize instances of a GameManager
  * via the EscapeBuilder. You do not have to use this, but are encouraged to do so.
- *
- * However, you do need to be able to load the appropriate named data from the 
+ * <p>
+ * However, you do need to be able to load the appropriate named data from the
  * configuration file in order to create a game correctly.
- * 
+ * <p>
  * MODIFIABLE: YES
  * MOVEABLE: YES
  * REQUIRED: NO
  */
-public class RuleDescriptor
-{
-	public RuleID ruleId;
-	public int ruleValue;
-	
-	public RuleDescriptor()
-	{
-	    // needed for JAXB unmarshalling
-	}
-	
-	/**
-	 * Description
-	 * @param ruleId
-	 * @param ruleValue
-	 */
-	public RuleDescriptor(RuleID ruleId, int ruleValue)
-	{
-		this.ruleId = ruleId;
-		this.ruleValue = ruleValue;
-	}
+public class RuleDescriptor {
+    public RuleID ruleId;
+    public int ruleValue;
 
-	public RuleID getRuleId() {
-		return ruleId;
-	}
+    public RuleDescriptor() {
+        // needed for JAXB unmarshalling
+    }
 
-	public int getRuleValue() {
-		return ruleValue;
-	}
-
-	/*
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString()
-	{
-		return "RuleDescriptor [ruleId=" + ruleId + ", ruleValue=" + ruleValue + "]";
-	}
+    /*
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return "RuleDescriptor [ruleId=" + ruleId + ", ruleValue=" + ruleValue + "]";
+    }
 }

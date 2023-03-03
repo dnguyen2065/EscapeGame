@@ -18,6 +18,14 @@ public class MoveCheck {
     Coordinate to;
     String playerTurn;
 
+    /**
+     * Constructor for MoveCheck
+     *
+     * @param piece           piece to be moved
+     * @param gameInitializer gameInitializer
+     * @param from            starting coordinate
+     * @param to              ending coordinate
+     */
 
     public MoveCheck(EscapePiece piece, EscapeGameInitializer gameInitializer, Coordinate from, Coordinate to) {
         this.piece = piece;
@@ -27,6 +35,14 @@ public class MoveCheck {
         this.playerTurn = gameInitializer.currPlayer;
     }
 
+    /**
+     * gets piece movement pattern and passes its from and to location to find the distance
+     *
+     * @param from                starting coordinate
+     * @param to                  ending coordinate
+     * @param pieceTypeDescriptor piece movement pattern
+     * @return distance between two coordinates
+     */
     public static int distance(CoordinateImpl from, CoordinateImpl to, PieceTypeDescriptor pieceTypeDescriptor) {
         EscapePiece.MovementPattern pattern = whatPattern(pieceTypeDescriptor);
         assert pattern != null;
@@ -40,6 +56,11 @@ public class MoveCheck {
         return -1;
     }
 
+    /**
+     * gets movement pattern for moving piece
+     *
+     * @return movement pattern
+     */
     private static EscapePiece.MovementPattern whatPattern(PieceTypeDescriptor pieceTypeDescriptor) {
         if (pieceTypeDescriptor.getMovementPattern().equals(EscapePiece.MovementPattern.LINEAR)) {
             return EscapePiece.MovementPattern.LINEAR;
@@ -64,10 +85,24 @@ public class MoveCheck {
 //        return -1;
 //    }
 
+    /**
+     * Calculates the distance between two coordinates should be used for orthogonal when fly attribute is true
+     *
+     * @param from starting coordinate
+     * @param to   ending coordinate
+     * @return the distance between the two coordinates
+     */
     private static int orthoDist(CoordinateImpl from, CoordinateImpl to) {
         return Math.abs(from.getRow() - to.getRow()) + Math.abs(from.getColumn() - to.getColumn());
     }
 
+    /**
+     * Calculates the distance between two coordinates should be used for omni when fly attribute is true
+     *
+     * @param from starting coordinate
+     * @param to   ending coordinate
+     * @return the distance between the two coordinates
+     */
     private static int omniDist(CoordinateImpl from, CoordinateImpl to) {
         int distX = Math.abs(from.getRow() - to.getRow());
         int distY = Math.abs(from.getColumn() - to.getColumn());
@@ -80,6 +115,11 @@ public class MoveCheck {
         return min + straight;
     }
 
+    /**
+     * Checks if the move is valid
+     *
+     * @return true if the move is valid
+     */
     public boolean falseConditions() {
         EscapeGameManager<CoordinateImpl> escapeGameManager = new EscapeGameManagerImpl<>(gameInitializer);
         if (escapeGameManager.getPieceAt((CoordinateImpl) from) == null) {
@@ -103,31 +143,58 @@ public class MoveCheck {
 
     }
 
+    /**
+     * Checks if the move is valid
+     *
+     * @return true if the move is valid
+     */
     public boolean isValidMove() {
         EscapeGameManagerImpl<CoordinateImpl> escapeGameManager = new EscapeGameManagerImpl<>(gameInitializer);
+
         for (PieceTypeDescriptor pieceTypeDescriptor : gameInitializer.getPieceTypes()) {
             if (pieceTypeDescriptor.getPieceName().equals(escapeGameManager.getPieceAt((CoordinateImpl) from).getName())) {
                 if (pieceTypeDescriptor.getMovementPattern().equals(EscapePiece.MovementPattern.LINEAR)) {
-
+                    //if (pieceTypeDescriptor.getAttribute(EscapePiece.PieceAttributeID.FLY).getValue() == 1) {
                     if (pieceTypeDescriptor.getAttribute(EscapePiece.PieceAttributeID.DISTANCE).getValue() < distance((CoordinateImpl) from, (CoordinateImpl) to, pieceTypeDescriptor)) {
                         return false;
                     } else {
-                        return makeMove();
+                        if (pieceTypeDescriptor.getAttribute(EscapePiece.PieceAttributeID.DISTANCE).getValue() < distance((CoordinateImpl) from, (CoordinateImpl) to, pieceTypeDescriptor)) {
+                            return false;
+                        } else {
+                            return makeMove();
+                        }
                     }
+                    //}
                 } else if (pieceTypeDescriptor.getMovementPattern().equals(EscapePiece.MovementPattern.ORTHOGONAL)) {
+                    //if (pieceTypeDescriptor.getAttribute(EscapePiece.PieceAttributeID.FLY).getValue() == 1) {
                     if (pieceTypeDescriptor.getAttribute(EscapePiece.PieceAttributeID.DISTANCE).getValue() < distance((CoordinateImpl) from, (CoordinateImpl) to, pieceTypeDescriptor)) {
                         return false;
                     } else {
-                        return makeMove();
+                        if (pieceTypeDescriptor.getAttribute(EscapePiece.PieceAttributeID.DISTANCE).getValue() < OrthogonalSearch.orthoBFS((CoordinateImpl) to, (CoordinateImpl) from, gameInitializer)) {
+                            return false;
+                        } else {
+                            return makeMove();
 
+                        }
                     }
+                    // }
                 } else if (pieceTypeDescriptor.getMovementPattern().equals(EscapePiece.MovementPattern.OMNI)) {
+                    //if (pieceTypeDescriptor.getAttribute(EscapePiece.PieceAttributeID.FLY).getValue() == 1) {
                     if (pieceTypeDescriptor.getAttribute(EscapePiece.PieceAttributeID.DISTANCE).getValue() < distance((CoordinateImpl) from, (CoordinateImpl) to, pieceTypeDescriptor)) {
                         return false;
                     } else {
-                        return makeMove();
+                        if (pieceTypeDescriptor.getAttribute(EscapePiece.PieceAttributeID.DISTANCE).getValue() < OmniSearch.omniBFS((CoordinateImpl) to, (CoordinateImpl) from, gameInitializer)) {
+                            System.out.println(OmniSearch.omniBFS((CoordinateImpl) to, (CoordinateImpl) from, gameInitializer));
+                            return false;
+                        } else {
+                            System.out.println(OmniSearch.omniBFS((CoordinateImpl) to, (CoordinateImpl) from, gameInitializer));
 
+                            return makeMove();
+
+                        }
                     }
+
+                    // }
                 }
             }
         }
@@ -135,7 +202,12 @@ public class MoveCheck {
         return false;
     }
 
-
+    /**
+     * Makes the move
+     * also accumulates the score and changes the player turn
+     *
+     * @return true if the move is made
+     */
     private boolean makeMove() {
         LocationInitializer[] LI = gameInitializer.getLocationInitializers();
         Score score = new Score(playerTurn, gameInitializer);

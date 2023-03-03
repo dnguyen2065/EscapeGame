@@ -6,7 +6,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * https://www.eclipse.org/legal/epl-2.0/
- * 
+ *
  * Copyright ©2016-2023 Gary F. Pollice
  *******************************************************************************/
 package escape.required;
@@ -18,34 +18,45 @@ import escape.required.EscapePiece.PieceAttributeID;
  * A JavaBean that represents an attribute for piece. This file
  * is provided as an example that can be used to initialize instances of a GameManager
  * via the EscapeBuilder. You do not have to use this, but are encouraged to do so.
- *
- * However, you do need to be able to load the appropriate named data from the 
+ * <p>
+ * However, you do need to be able to load the appropriate named data from the
  * configuration file in order to create a game correctly.
- * 
+ * <p>
  * MODIFIABLE: YES
  * MOVEABLE: YES
  * REQUIRED: NO
  */
 public class PieceAttribute {
-	
-    PieceAttributeID id;
-    int value;
-    
-    public PieceAttribute() {}
-    
-    public PieceAttributeID getId() { return id; }
-    public void setId(PieceAttributeID id) { this.id = id; }
-    public int getValue() { return value; }
-    public void setValue(int intValue) { this.value = intValue; }
 
+	PieceAttributeID id;
+	int value;
+
+	public PieceAttribute() {
+	}
+
+
+	public PieceAttributeID getId() {
+		return id;
+	}
+
+	public void setId(PieceAttributeID id) {
+		this.id = id;
+	}
+
+	public int getValue() {
+		return value;
+	}
+
+	public void setValue(int intValue) {
+		this.value = intValue;
+	}
 
 
 	/*
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return "PieceAttribute [id=" + id + ", value=" + value + "]";
 	}
 }

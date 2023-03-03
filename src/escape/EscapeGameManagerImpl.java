@@ -16,6 +16,11 @@ public class EscapeGameManagerImpl<C extends Coordinate> implements EscapeGameMa
     private String[] players;
     private LocationInitializer[] locationInitializers;
 
+    /**
+     * Constructor for EscapeGameManagerImpl
+     *
+     * @param gameInitializer gameInitializer
+     */
     public EscapeGameManagerImpl(EscapeGameInitializer gameInitializer) {
         this.gameInitializer = gameInitializer;
         this.boardX = gameInitializer.getxMax();
@@ -24,11 +29,24 @@ public class EscapeGameManagerImpl<C extends Coordinate> implements EscapeGameMa
         this.locationInitializers = gameInitializer.getLocationInitializers();
     }
 
+    /**
+     * creates a new coordinate object
+     *
+     * @param x the x component
+     * @param y the y component
+     * @return coordinate
+     */
     @Override
     public CoordinateImpl makeCoordinate(int x, int y) {
         return new CoordinateImpl(x, y);
     }
 
+    /**
+     * gets the piece at a given coordinate
+     *
+     * @param coordinate coordinate
+     * @return piece at the coordinate
+     */
     @Override
     public EscapePieceImpl getPieceAt(CoordinateImpl coordinate) {
 
@@ -43,6 +61,13 @@ public class EscapeGameManagerImpl<C extends Coordinate> implements EscapeGameMa
         return null;
     }
 
+    /**
+     * creates a new game status object
+     *
+     * @param from starting location
+     * @param to   ending location
+     * @return game status
+     */
     @Override
     public GameStatus move(CoordinateImpl from, CoordinateImpl to) {
         GameStatus gameStatus = new GameStatusImpl(getPieceAt(from), gameInitializer, from, to);

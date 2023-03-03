@@ -14,11 +14,22 @@ public class Score {
     private int score;
     EscapeGameInitializer gameInitializer;
 
+    /**
+     * Constructor for Score
+     *
+     * @param player          player
+     * @param gameInitializer gameInitializer
+     */
     public Score(String player, EscapeGameInitializer gameInitializer) {
         this.gameInitializer = gameInitializer;
         this.player = player;
     }
 
+    /**
+     * gets the turn limit for the game
+     *
+     * @return turn limit
+     */
 
     public int getTurnLimit() {
         RuleDescriptor[] rules = gameInitializer.getRules();
@@ -30,7 +41,12 @@ public class Score {
         return -1;
     }
 
-
+    /**
+     * accumulates score for each player
+     *
+     * @param from starting coordinate
+     * @param to   ending coordinate
+     */
     public void accumScore(CoordinateImpl from, CoordinateImpl to) {
         EscapeGameManagerImpl<CoordinateImpl> escapeGameManager = new EscapeGameManagerImpl<>(gameInitializer);
 

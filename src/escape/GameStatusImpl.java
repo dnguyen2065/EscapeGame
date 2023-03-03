@@ -15,6 +15,14 @@ public class GameStatusImpl implements GameStatus {
     Coordinate from;
     Coordinate to;
 
+    /**
+     * Constructor for GameStatusImpl
+     *
+     * @param piece           piece to be moved
+     * @param gameInitializer gameInitializer
+     * @param from            starting coordinate
+     * @param to              ending coordinate
+     */
     public GameStatusImpl(EscapePiece piece, EscapeGameInitializer gameInitializer, Coordinate from, Coordinate to) {
         this.piece = piece;
         this.gameInitializer = gameInitializer;
@@ -22,6 +30,11 @@ public class GameStatusImpl implements GameStatus {
         this.to = to;
     }
 
+    /**
+     * checks if the move is valid
+     *
+     * @return true if the move is valid
+     */
 
     @Override
     public boolean isValidMove() {
@@ -37,6 +50,11 @@ public class GameStatusImpl implements GameStatus {
         return false;
     }
 
+    /**
+     * gets the result of the game after a move
+     *
+     * @return result of the game
+     */
     @Override
     public MoveResult getMoveResult() {
         System.out.println(gameInitializer.currPlayer + ": " + gameInitializer.originalPlayerScore);

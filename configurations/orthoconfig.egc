@@ -10,7 +10,7 @@
       (4, 6) Chris bird
       (8, 8) exit
   Piece descriptors :
-      frog omni [distance 3]
+      frog orthogonal [distance 3]
       horse orthogonal [distance 3]
       bird omni [fly, distance 3]
   Rules :

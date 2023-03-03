@@ -147,6 +147,9 @@ public class EscapeGameInitializer {
                 + Arrays.toString(pieceTypes) + "]";
     }
 
+    /**
+     * @return the numPlayerTurns
+     */
     public int getNumPlayerTurns() {
         return numPlayerTurns;
     }
@@ -154,6 +157,9 @@ public class EscapeGameInitializer {
     public String originalPlayer = null;
     public String opponentPlayer = null;
 
+    /**
+     * This method is used to determine which player's turn it is. and to keep track of the number of turns
+     */
     public void playerTurn() {
 
         originalPlayer = locationInitializers[0].player;
